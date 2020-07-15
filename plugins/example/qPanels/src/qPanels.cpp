@@ -42,7 +42,7 @@
 //  - constructor should mainly be used to initialize actions and other members
 qPanels::qPanels ( QObject *parent )
 	: QObject( parent )
-	, ccStdPluginInterface( ":/CC/plugin/qPanels/info.json" )
+	, ccStdPluginInterface( ":/CC/plugin/example/qPanels/info.json" )
 	, m_action( nullptr )
 {
 }
