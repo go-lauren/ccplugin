@@ -19,4 +19,10 @@ if (INSTALL_QDUMMY_PLUGIN)
     #set dependencies to necessary libraries (see qPCV for an example)
     #target_link_libraries( ${PROJECT_NAME} LIB1 )
     #include_directories( ${LIB1_INCLUDE_DIR} )
+
+    AddPlugin( NAME ${PROJECT_NAME} )
+	
+	add_subdirectory( include )
+	add_subdirectory( src )
+
 endif()
