@@ -14,7 +14,7 @@ if (INSTALL_QDUMMY_PLUGIN)
     
     #if the plugin is an 'OpenGL filter', uncomment the line below
     #set( CC_OPENGL_FILTER ON BOOL)
-    include( ../CMakePluginTpl.cmake )
+    #include( ../CMakePluginTpl.cmake )
     
     #set dependencies to necessary libraries (see qPCV for an example)
     #target_link_libraries( ${PROJECT_NAME} LIB1 )
