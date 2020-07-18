@@ -1,8 +1,8 @@
 {
 	"type" : "Standard",
-	"name" : "Example (Standard Plugin)",
+	"name" : "Panelization",
 	"icon" : ":/CC/plugin/qPanels/images/icon.png",
-	"description": "This is a description of the marvelous Example plugin. It does nothing.",
+	"description": "This plugin is supposed to produce a panelization of the facade.",
 	"authors" : [
 		{
 			"name" : "Daniel Girardeau-Montaut",

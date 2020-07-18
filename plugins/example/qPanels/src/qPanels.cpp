@@ -36,7 +36,10 @@
 #include "qPanels.h"
 
 #include "ActionA.h"
-
+#include "fParamsDlg.h"
+#include "facade.h"
+#include "tools.h"
+#include <vector>
 // Default constructor:
 //	- pass the Qt resource path to the info.json file (from <yourPluginName>.qrc file) 
 //  - constructor should mainly be used to initialize actions and other members
@@ -56,19 +59,23 @@ void qPanels::onNewSelection( const ccHObject::Container &selectedEntities )
 		return;
 	}
 	
-	// If you need to check for a specific type of object, you can use the methods
-	// in ccHObjectCaster.h or loop and check the objects' classIDs like this:
-	//
-	//	for ( ccHObject *object : selectedEntities )
-	//	{
-	//		if ( object->getClassID() == CC_TYPES::VIEWPORT_2D_OBJECT )
-	//		{
-	//			// ... do something with the viewports
-	//		}
-	//	}
-	
-	// For example - only enable our action if something is selected.
-	m_action->setEnabled( !selectedEntities.empty() );
+	int cloud = 0;
+	int polys = 0;
+	for ( ccHObject *object : selectedEntities ) {
+		switch( object->getClassID()) {
+			case CC_TYPES::POINT_CLOUD:
+				cloud++;
+				break;
+			case CC_TYPES::POLY_LINE:
+				polys++;
+				break;
+			default:
+				m_action->setEnabled( false );
+				return;
+		}
+	}
+
+	m_action->setEnabled( true );
 }
 
 // This method returns all the 'actions' your plugin can perform.
@@ -87,9 +94,54 @@ QList<QAction *> qPanels::getActions()
 		// Connect appropriate signal
 		connect( m_action, &QAction::triggered, this, [this]()
 		{
-			Example::performActionA( m_app );
+			doAction( m_app );
 		});
 	}
 
 	return { m_action };
+}
+
+
+void qPanels::doAction( ccMainAppInterface *appInterface )
+{
+	if ( appInterface == nullptr )
+	{
+		// The application interface should have already been initialized when the plugin is loaded
+		Q_ASSERT( false );
+		
+		return;
+	}
+	
+	fParamsDlg dlg;
+	if (!dlg.exec()) {
+		appInterface->dispToConsole( "[Panels] Returned false from exec!", ccMainAppInterface::STD_CONSOLE_MESSAGE );
+		return;
+	}
+	appInterface->dispToConsole( "[Panels] Returned true from exec!", ccMainAppInterface::STD_CONSOLE_MESSAGE );
+
+	QString mesh_file = dlg.getMeshPath();
+	QString frames_file = dlg.getFramesPath();
+	QString sa_file = dlg.getSupportingAreasPath();
+	double width = 21.741828;
+	double height = 22.034304;
+	double min_width = 0.5;
+	double min_height = 0.5;
+	double max_width = 13.5;
+	double max_height = 5.5;
+	double delta = 0.01;
+
+	FacadeSolver solver = FacadeSolver();
+	vector<Frame> frame;
+	vector<SupportingArea> v;
+	vector<SupportingArea> h;
+
+	Mesh mesh;
+
+	mesh.loadFromFile(mesh_file.toStdString());
+	loadFramesFromFile(frame, frames_file.toStdString());
+	loadSupportingAreasFromFile(v, h, sa_file.toStdString());
+
+	solver.init(width, height, min_height, min_width, max_height, max_width, delta, frame, v, h, mesh);
+	solver.solve();
+	solver.printSolution();
 }

@@ -62,4 +62,5 @@ private:
 		toolbar and an entry in the plugin menu.
 	**/
 	QAction* m_action;
+	void doAction( ccMainAppInterface *appInterface );
 };

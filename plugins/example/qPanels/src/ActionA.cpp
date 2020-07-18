@@ -2,7 +2,7 @@
 
 #include "ccMainAppInterface.h"
 
-namespace Example
+namespace Panels
 {
 	// This is an example of an action's method called when the corresponding action
 	// is triggered (i.e. the corresponding icon or menu entry is clicked in CC's

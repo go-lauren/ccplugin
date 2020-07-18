@@ -4,7 +4,7 @@
 
 class ccMainAppInterface;
 
-namespace Example
+namespace Panels
 {
 	void	performActionA( ccMainAppInterface *appInterface );
 }
