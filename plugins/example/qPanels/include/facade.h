@@ -224,6 +224,7 @@ class FacadeSolver {
     void printSolution();
     FacadeSolver();
     void toggleGraphics();
+    vector<Panel> getSolution();
     void init(double, double, double, double, double, double, double, vector<Frame>, vector<SupportingArea>, vector<SupportingArea>, Mesh);
   private:
     void adjustForFrames(Panel&);
@@ -236,6 +237,7 @@ class FacadeSolver {
     bool checkMesh(Panel&);
     void shrinkToMesh(Panel&);
     void drawState(int);
+    
 }; // class FacadeSolver
 
 #endif // FACADE_H

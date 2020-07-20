@@ -441,6 +441,9 @@ bool FacadeSolver::solve(void) {
     }
 };
 
+vector<Panel> FacadeSolver::getSolution() {
+    return solution;
+}
 void FacadeSolver::drawState(int ms) {
     // r.drawState(solution, frames, vertical, horizontal, w_fac, h_fac, ms);
 }

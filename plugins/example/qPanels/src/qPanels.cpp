@@ -143,5 +143,11 @@ void qPanels::doAction( ccMainAppInterface *appInterface )
 
 	solver.init(width, height, min_height, min_width, max_height, max_width, delta, frame, v, h, mesh);
 	solver.solve();
-	solver.printSolution();
+	vector<Panel> sol = solver.getSolution();
+
+	appInterface->dispToConsole( "[Panels] ", ccMainAppInterface::STD_CONSOLE_MESSAGE);
+	for (int i = 0; i < sol.size(); i++) {
+        Panel p = sol[i];
+        appInterface->dispToConsole(QString("Panel {1}: ({2} {3}) width: {4} height: {5}\n").arg(i).arg(p.x[0]).arg(p.y[0]).arg(p.x[1] - p.x[0]).arg(p.y[1] - p.y[0]), ccMainAppInterface::STD_CONSOLE_MESSAGE);
+    }
 }
