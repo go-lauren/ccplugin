@@ -3,6 +3,7 @@
 #include <iostream>
 #include <algorithm>
 #include <cfloat>
+#include "ccLog.h"
 
 FacadeSolver::FacadeSolver() {
     h_fac = 10;
@@ -224,7 +225,7 @@ void FacadeSolver::printSolution() {
     sort(solution.begin(), solution.end());
     for (int i = 0; i < solution.size(); i++) {
         Panel p = solution[i];
-        printf("Panel %d: (%f, %f) width: %f height: %f\n", i, p.x[0], p.y[0], p.x[1] - p.x[0], p.y[1] - p.y[0]);
+        ccLog::Print("Panel %d: (%f, %f) width: %f height: %f\n", i, p.x[0], p.y[0], p.x[1] - p.x[0], p.y[1] - p.y[0]);
     }
 }
 
@@ -283,7 +284,7 @@ void FacadeSolver::shrinkToMesh(Panel& p) {
             max_val[i][j] = current_max;
             min_val[i][j] = current_min;
             cost[i][j] = (current_max - current_min > max_dist || x - p.x[0] < min_width || y - p.y[0] < min_height) ? -1 : (x - p.x[0]) * (y - p.y[0]);
-            // printf("(i,j): (%d %d), (x, y): (%f %f), max: %f min: %f val: %f %f\n", i, j, x, y, current_max, current_min, d, cost[i][j]);
+            ccLog::Print("(i,j): (%d %d), (x, y): (%f %f), max: %f min: %f val: %f %f\n", i, j, x, y, current_max, current_min, d, cost[i][j]);
         }
     }
     
@@ -415,7 +416,7 @@ bool FacadeSolver::solve(void) {
             solution.erase(rm);
 
             origins.insert(origins.end(), removed.begin(), removed.end());
-            printf("ORIGIN: %f %f ", p.x[0], p.y[0]);
+            ccLog::Print("ORIGIN: %f %f ", p.x[0], p.y[0]);
             // removed added origin points
             if (!covered1) {
                 vector<Point>::iterator rm = remove(origins.begin(), origins.end(), op1);

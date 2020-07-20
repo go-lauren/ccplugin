@@ -39,6 +39,7 @@
 #include "fParamsDlg.h"
 #include "facade.h"
 #include "tools.h"
+#include <ccLog.h>
 #include <vector>
 // Default constructor:
 //	- pass the Qt resource path to the info.json file (from <yourPluginName>.qrc file) 
@@ -136,10 +137,12 @@ void qPanels::doAction( ccMainAppInterface *appInterface )
 	vector<SupportingArea> h;
 
 	Mesh mesh;
-
-	mesh.loadFromFile(mesh_file.toStdString());
-	loadFramesFromFile(frame, frames_file.toStdString());
-	loadSupportingAreasFromFile(v, h, sa_file.toStdString());
+	// mesh.loadFromFile(mesh_file.toStdString());
+	// loadFramesFromFile(frame, frames_file.toStdString());
+	// loadSupportingAreasFromFile(v, h, sa_file.toStdString());
+	mesh.loadFromFile("~/Documents/panels/code/flipped.txt");
+	loadFramesFromFile(frame, "~/Documents/panels/code/frames.txt");
+	loadSupportingAreasFromFile(v, h, "~/Documents/panels/code/sa.txt");
 
 	solver.init(width, height, min_height, min_width, max_height, max_width, delta, frame, v, h, mesh);
 	solver.solve();
