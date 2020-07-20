@@ -1,6 +1,8 @@
 #include "facade.h"
 #include "tools.h"
 #include <iostream>
+#include <algorithm>
+#include <cfloat>
 
 FacadeSolver::FacadeSolver() {
     h_fac = 10;
@@ -229,7 +231,7 @@ void FacadeSolver::printSolution() {
 /* Checks to see if a panel is within MAX_DIST of the mesh */
 bool FacadeSolver::checkMesh(Panel& p) {
     double max_val = -1;
-    double min_val = __DBL_MAX__;
+    double min_val = DBL_MAX;
     for (double j = p.y[0]; j < p.y[1]; j += mesh.unit) {
         for (double i = p.x[0]; i < p.x[1]; i += mesh.unit) {
             double d = mesh.getDist(i, j);
